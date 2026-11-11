@@ -482,7 +482,7 @@ func cmdUp(a *app, args []string) int {
 // upgradeHint says how to update Albert, based on how it was installed.
 func upgradeHint() string {
 	if exe, err := os.Executable(); err == nil && isHomebrewPath(exe) {
-		return "Update with: brew upgrade albert"
+		return "Update with: brew update && brew upgrade albert"
 	}
 	return "Update by running the install command from the README again."
 }

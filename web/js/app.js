@@ -590,7 +590,7 @@ async function start() {
   await syncJobs();
   connect();
   api.health().then((h) => {
-    if (h.latest) notice(`Albert ${h.latest} is available (you have ${h.version}). Run "brew upgrade albert" in Terminal, or run the install command again if you didn't use Homebrew.`, 'info');
+    if (h.latest) notice(`Albert ${h.latest} is available (you have ${h.version}). Run "brew update && brew upgrade albert" in Terminal, or run the install command again if you didn't use Homebrew.`, 'info');
   }, () => {});
 }
 

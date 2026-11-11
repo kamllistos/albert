@@ -39,7 +39,7 @@ Some updates need your Mac password (for example, tools installed system-wide). 
 
 ## Update Albert
 
-When a new version is out, `albert up` and the Albert window tell you. Update with `brew upgrade albert`, or run the install one-liner again if you used it. Then run `albert down` and `albert up`.
+When a new version is out, `albert up` and the Albert window tell you. Update with `brew update && brew upgrade albert`, or run the install one-liner again if you used it. Then run `albert down` and `albert up`.
 
 
 ## Uninstall
