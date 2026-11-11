@@ -189,9 +189,9 @@ func TestGemWatchPathsAndAvailable(t *testing.T) {
 	}
 }
 
-func TestDefaultsHasTwelve(t *testing.T) {
+func TestDefaultsHasThirteen(t *testing.T) {
 	got := names(Defaults(&runner.Fake{}, nil))
-	want := []string{"brew", "cask", "uv", "pipx", "pip", "npm", "pnpm", "bun", "mas", "cargo", "go", "gem"}
+	want := []string{"brew", "cask", "uv", "pipx", "pip", "npm", "pnpm", "bun", "mas", "cargo", "go", "gem", "github"}
 	if !reflect.DeepEqual(got, want) {
 		t.Errorf("Defaults = %v, want %v", got, want)
 	}

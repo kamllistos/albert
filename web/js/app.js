@@ -506,7 +506,7 @@ function clearFilters() {
 $('tab-installed').addEventListener('click', () => setTab('installed'));
 $('tab-install').addEventListener('click', () => setTab('install'));
 document.querySelector('.tabs').addEventListener('keydown', (e) => {
-  if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+  if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) return;
   const next = state.tab === 'installed' ? 'install' : 'installed';
   setTab(next);
   $(next === 'installed' ? 'tab-installed' : 'tab-install').focus();

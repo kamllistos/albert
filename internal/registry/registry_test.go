@@ -225,3 +225,17 @@ func TestNewerAlbert(t *testing.T) {
 		}
 	}
 }
+
+func TestGitHubSearch(t *testing.T) {
+	c := newTestClient(t, func(w http.ResponseWriter, r *http.Request) {
+		q := r.URL.Query()
+		if r.URL.Path != "/search/repositories" || q.Get("q") != "lint language:go" || q.Get("sort") != "stars" {
+			t.Errorf("request = %s", r.URL)
+		}
+		w.Write([]byte(`{"items":[{"full_name":"a/b","description":"d","html_url":"https://github.com/a/b","stargazers_count":5}]}`))
+	})
+	got, err := c.GitHubSearch(context.Background(), "lint")
+	if err != nil || len(got) != 1 || got[0] != (Pkg{Name: "a/b", Version: "★ 5", Description: "d", Homepage: "https://github.com/a/b"}) {
+		t.Fatalf("got %+v, err %v", got, err)
+	}
+}

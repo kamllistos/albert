@@ -21,7 +21,7 @@ export function initInstall(el, onInstall, opts = {}) {
   const head = h('div', 'install-head');
   head.append(
     h('h2', null, 'Install something new'),
-    h('p', null, 'Search Homebrew, the App Store, npm, PyPI, Cargo and more. Pick a result and press Install.'),
+    h('p', null, 'Search Homebrew, the App Store, npm, PyPI, Cargo, GitHub and more. Pick a result and press Install.'),
   );
   const box = h('div', 'search search-big');
   const input = h('input');
