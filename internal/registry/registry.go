@@ -160,6 +160,28 @@ func (c *Client) NPMSearch(ctx context.Context, q string) ([]Pkg, error) {
 	return out, nil
 }
 
+// GitHubSearch returns up to 10 Go repositories matching q, most starred
+// first. Name is "owner/repo"; Version carries the star count.
+func (c *Client) GitHubSearch(ctx context.Context, q string) ([]Pkg, error) {
+	var r struct {
+		Items []struct {
+			FullName    string `json:"full_name"`
+			Description string `json:"description"`
+			HTMLURL     string `json:"html_url"`
+			Stars       int    `json:"stargazers_count"`
+		} `json:"items"`
+	}
+	v := url.Values{"q": {q + " language:go"}, "sort": {"stars"}, "per_page": {"10"}}
+	if err := c.get(ctx, c.GitHubURL+"/search/repositories?"+v.Encode(), &r); err != nil {
+		return nil, err
+	}
+	out := make([]Pkg, 0, len(r.Items))
+	for _, i := range r.Items {
+		out = append(out, Pkg{Name: i.FullName, Version: "★ " + strconv.Itoa(i.Stars), Description: i.Description, Homepage: i.HTMLURL})
+	}
+	return out, nil
+}
+
 // Crate returns the latest stable release of a crates.io crate.
 func (c *Client) Crate(ctx context.Context, name string) (Pkg, error) {
 	var r struct {

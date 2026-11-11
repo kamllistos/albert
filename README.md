@@ -103,6 +103,7 @@ You can also use Albert without the browser.
 | `cargo` | Rust tools installed with `cargo install` | Tools installed from a path or git repository are left alone. |
 | `go` | Go tools installed with `go install` | |
 | `gem` | Ruby gems | Gems in the macOS system Ruby are read-only. |
+| `github` | Go tools on GitHub (search and install only) | Searches Go repositories on github.com and installs with `go install`; installed tools then show up under `go`. Only repos whose root is a `main` package install. Unauthenticated search is rate-limited by GitHub. |
 
 "Read-only" tools are shown but Albert won't change them, because something else manages them. Sources whose package manager isn't installed are simply skipped; `albert doctor` shows which ones Albert found.
 

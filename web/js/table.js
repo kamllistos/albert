@@ -3,7 +3,7 @@
 
 const LABELS = {
   brew: 'Homebrew', cask: 'Homebrew apps', uv: 'uv', pipx: 'pipx', pip: 'pip',
-  npm: 'npm', pnpm: 'pnpm', bun: 'Bun', mas: 'App Store', cargo: 'Cargo', go: 'Go', gem: 'RubyGems',
+  npm: 'npm', pnpm: 'pnpm', bun: 'Bun', mas: 'App Store', cargo: 'Cargo', go: 'Go', gem: 'RubyGems', github: 'GitHub',
 };
 const COMMANDS = { cask: 'brew' };
 
