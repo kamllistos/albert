@@ -4,8 +4,8 @@ What changed in Albert, newest first.
 
 ## Unreleased (2026-11-10)
 
-- **Tabs across the top.** Installed and Install new now sit in a row above the list instead of down the sidebar.
-- **Details dock on the right.** The details panel now fills the right edge, top to bottom, and the list makes room for it instead of being covered.
+- **One bar across the top.** The left sidebar is gone. The logo, the Installed and Install new tabs, and Refresh and Update all now share one bar at the top, so the list gets the full width.
+- **Details dock on the right.** The details panel now fills the right edge below the top bar, and the list makes room for it instead of being covered.
 
 ## 0.1.8 (2026-11-10)
 

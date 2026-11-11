@@ -33,7 +33,7 @@
   --radius: 10px;
   --radius-sm: 7px;
   --gutter: 28px;
-  --side-w: 232px;
+  --header-h: 56px;
   --detail-w: 360px;
   --ink: #111110;
   --bone: #ece9e4;
@@ -108,46 +108,40 @@ a:hover { text-decoration: underline; }
   fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
 }
 
-/* ---- sidebar -------------------------------------------------------------- */
+/* ---- top bar -------------------------------------------------------------- */
 
-#app { display: grid; grid-template-columns: var(--side-w) minmax(0, 1fr); min-height: 100vh; }
 .content { min-width: 0; }
 
-.sidebar {
-  position: sticky; top: 0; height: 100vh; z-index: 20;
-  display: flex; flex-direction: column; gap: 28px;
-  padding: 22px 14px 18px;
+.topbar {
+  position: sticky; top: 0; z-index: 40;
+  display: flex; align-items: stretch; gap: 28px;
+  height: var(--header-h); padding: 0 var(--gutter);
   background: var(--ink); color: var(--bone);
 }
 
-.brand { display: flex; align-items: center; gap: 11px; padding: 0 6px; }
-.brand h1 { font-size: 17px; font-weight: 700; letter-spacing: -0.02em; }
-.brand-mark { width: 34px; height: 34px; flex: none; border-radius: 8px; box-shadow: 0 0 0 1px rgba(236, 233, 228, 0.14); }
+.brand { display: flex; align-items: center; align-self: center; gap: 10px; }
+.brand h1 { font-size: 16px; font-weight: 700; letter-spacing: -0.02em; }
+.brand-mark { width: 30px; height: 30px; flex: none; border-radius: 8px; box-shadow: 0 0 0 1px rgba(236, 233, 228, 0.14); }
 .session-mark { width: 44px; height: 44px; border-radius: 10px; }
 
-.tabs {
-  display: flex; gap: 4px;
-  padding: 0 var(--gutter);
-  border-bottom: 1px solid var(--border);
-}
+.tabs { display: flex; gap: 4px; }
 .tab {
   display: flex; align-items: center; gap: 8px;
-  margin-bottom: -1px; padding: 16px 12px 13px;
+  padding: 0 12px;
   border: 0; border-bottom: 2px solid transparent; background: none; cursor: pointer;
-  color: var(--text-2); font-size: 13.5px; font-weight: 500;
+  color: rgba(236, 233, 228, 0.62); font-size: 13.5px; font-weight: 500;
 }
-.tab:hover { color: var(--text); }
-.tab[aria-selected="true"] { color: var(--text); border-bottom-color: var(--accent); }
+.tab:hover { color: var(--bone); }
+.tab[aria-selected="true"] { color: var(--bone); border-bottom-color: var(--accent); }
 .tab[aria-selected="true"] .icon { color: var(--accent); }
 
-.actions { display: flex; flex-direction: column; gap: 8px; margin-top: auto; }
+.actions { display: flex; align-items: center; gap: 8px; margin-left: auto; }
 .actions .btn {
-  width: 100%; justify-content: flex-start;
   background: rgba(236, 233, 228, 0.08); border-color: rgba(236, 233, 228, 0.14);
   color: var(--bone); box-shadow: none;
 }
 .actions .btn:hover:not(:disabled) { background: rgba(236, 233, 228, 0.14); }
-.actions .btn-primary { justify-content: center; background: var(--accent); border-color: transparent; color: var(--ink); font-weight: 600; }
+.actions .btn-primary { background: var(--accent); border-color: transparent; color: var(--on-accent); font-weight: 600; }
 .actions .btn-primary:hover:not(:disabled) { background: var(--accent-hover); }
 
 .checking {
@@ -298,7 +292,7 @@ col.c-status { width: 140px; }
 col.c-act { width: 196px; }
 
 .tools th {
-  position: sticky; top: 0; z-index: 1;
+  position: sticky; top: var(--header-h); z-index: 1;
   padding: 9px 12px;
   background: var(--surface-2);
   border-bottom: 1px solid var(--border);
@@ -361,7 +355,7 @@ col.c-act { width: 196px; }
 /* ---- detail panel ----------------------------------------------------------- */
 
 .detail {
-  position: fixed; z-index: 30; top: 0; right: 0; bottom: 0;
+  position: fixed; z-index: 30; top: var(--header-h); right: 0; bottom: 0;
   width: var(--detail-w);
   display: flex; flex-direction: column; gap: 14px;
   padding: 22px 20px;
@@ -420,7 +414,7 @@ col.c-act { width: 196px; }
 /* ---- job drawer ----------------------------------------------------------------- */
 
 .drawer {
-  position: fixed; z-index: 25; left: var(--side-w); right: 0; bottom: 0;
+  position: fixed; z-index: 25; left: 0; right: 0; bottom: 0;
   background: var(--surface);
   border-top: 1px solid var(--border);
   box-shadow: 0 -6px 24px rgba(0, 0, 0, 0.06);
@@ -496,7 +490,6 @@ col.c-act { width: 196px; }
 
 @media (max-width: 1080px) {
   :root { --gutter: 16px; }
-  :root { --side-w: 196px; }
   col.c-source { width: 104px; }
   col.c-status { width: 128px; }
   col.c-act { width: 186px; }
