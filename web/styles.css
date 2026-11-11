@@ -34,6 +34,7 @@
   --radius-sm: 7px;
   --gutter: 28px;
   --side-w: 232px;
+  --detail-w: 360px;
   --ink: #111110;
   --bone: #ece9e4;
   --drawer-h: 44px;
@@ -124,19 +125,19 @@ a:hover { text-decoration: underline; }
 .brand-mark { width: 34px; height: 34px; flex: none; border-radius: 8px; box-shadow: 0 0 0 1px rgba(236, 233, 228, 0.14); }
 .session-mark { width: 44px; height: 44px; border-radius: 10px; }
 
-.tabs { display: flex; flex-direction: column; gap: 2px; }
+.tabs {
+  display: flex; gap: 4px;
+  padding: 0 var(--gutter);
+  border-bottom: 1px solid var(--border);
+}
 .tab {
-  display: flex; align-items: center; gap: 11px;
-  border: 0; background: none; cursor: pointer; text-align: left;
-  padding: 9px 10px; border-radius: 7px;
-  color: rgba(236, 233, 228, 0.62); font-size: 13.5px; font-weight: 500;
-  box-shadow: inset 2px 0 0 transparent;
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: -1px; padding: 16px 12px 13px;
+  border: 0; border-bottom: 2px solid transparent; background: none; cursor: pointer;
+  color: var(--text-2); font-size: 13.5px; font-weight: 500;
 }
-.tab:hover { color: var(--bone); background: rgba(236, 233, 228, 0.07); }
-.tab[aria-selected="true"] {
-  color: var(--bone); background: rgba(236, 233, 228, 0.09);
-  box-shadow: inset 2px 0 0 var(--accent);
-}
+.tab:hover { color: var(--text); }
+.tab[aria-selected="true"] { color: var(--text); border-bottom-color: var(--accent); }
 .tab[aria-selected="true"] .icon { color: var(--accent); }
 
 .actions { display: flex; flex-direction: column; gap: 8px; margin-top: auto; }
@@ -360,16 +361,18 @@ col.c-act { width: 196px; }
 /* ---- detail panel ----------------------------------------------------------- */
 
 .detail {
-  position: fixed; z-index: 30; top: 16px; right: 16px; bottom: calc(var(--drawer-h) + 24px);
-  width: 360px; max-width: calc(100vw - 32px);
+  position: fixed; z-index: 30; top: 0; right: 0; bottom: 0;
+  width: var(--detail-w);
   display: flex; flex-direction: column; gap: 14px;
-  padding: 20px;
+  padding: 22px 20px;
   background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  box-shadow: var(--shadow-lg);
+  border-left: 1px solid var(--border);
+  box-shadow: -12px 0 32px rgba(0, 0, 0, 0.08);
   overflow-y: auto;
 }
+/* The open panel takes its own column instead of covering the table. */
+#app:has(.detail:not([hidden])) .content { margin-right: var(--detail-w); }
+#app:has(.detail:not([hidden])) .drawer { right: var(--detail-w); }
 .detail-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
 .detail h2 { font-size: 18px; font-weight: 650; word-break: break-word; }
 .detail-source { color: var(--text-2); font-size: 13px; margin-top: 2px; }

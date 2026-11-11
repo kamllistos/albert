@@ -2,6 +2,11 @@
 
 What changed in Albert, newest first.
 
+## Unreleased (2026-11-10)
+
+- **Tabs across the top.** Installed and Install new now sit in a row above the list instead of down the sidebar.
+- **Details dock on the right.** The details panel now fills the right edge, top to bottom, and the list makes room for it instead of being covered.
+
 ## 0.1.8 (2026-11-10)
 
 - The update hint now says `brew update && brew upgrade albert`, so it works even when your Homebrew hasn't refreshed its list of versions.
