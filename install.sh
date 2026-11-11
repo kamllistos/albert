@@ -14,6 +14,9 @@ die() {
 
 [ "$(uname -s)" = "Darwin" ] || die "Albert only runs on macOS."
 
+macos="$(sw_vers -productVersion)"
+[ "${macos%%.*}" -ge 12 ] || die "Albert needs macOS 12 (Monterey) or later; this Mac has macOS $macos."
+
 case "$(uname -m)" in
 arm64) arch=arm64 ;;
 x86_64) arch=amd64 ;;

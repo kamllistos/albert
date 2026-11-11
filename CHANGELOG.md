@@ -2,6 +2,10 @@
 
 What changed in Albert, newest first.
 
+## Unreleased (2026-11-10)
+
+- Albert needs macOS 12 (Monterey) or later. The README now says so, and the install script stops with a clear message on older Macs instead of installing a program that won't open.
+
 ## 0.1.8 (2026-11-10)
 
 - The update hint now says `brew update && brew upgrade albert`, so it works even when your Homebrew hasn't refreshed its list of versions.

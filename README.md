@@ -20,7 +20,7 @@ brew install kamllistos/tap/albert
 curl -fsSL https://raw.githubusercontent.com/kamllistos/albert/main/install.sh | sh
 ```
 
-Albert works on Apple silicon and Intel Macs (macOS). The script installs into `~/.local/bin` and tells you if that folder needs adding to your PATH.
+Albert works on Apple silicon and Intel Macs running macOS 12 (Monterey) or later. The script installs into `~/.local/bin` and tells you if that folder needs adding to your PATH.
 
 ## Use it
 
