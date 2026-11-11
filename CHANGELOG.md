@@ -2,7 +2,7 @@
 
 What changed in Albert, newest first.
 
-## 2026-11-10
+## 0.1.8 (2026-11-10)
 
 - **Search GitHub.** The "Install new" tab now also searches Go tools on GitHub and installs them with `go install`. Installed tools then show up under Go.
 - **New sidebar.** The top bar is now a dark left sidebar, and the colours follow the kamllistos logo: ink, orange and bone, in light and dark mode.
