@@ -2,12 +2,9 @@
 
 What changed in Albert, newest first.
 
-## Unreleased
-
-- The update hint now says `brew update && brew upgrade albert`, so it works even when your Homebrew hasn't refreshed its list of versions.
-
 ## 0.1.8 (2026-11-10)
 
+- The update hint now says `brew update && brew upgrade albert`, so it works even when your Homebrew hasn't refreshed its list of versions.
 - **Search GitHub.** The "Install new" tab now also searches Go tools on GitHub and installs them with `go install`. Installed tools then show up under Go.
 - **New sidebar.** The top bar is now a dark left sidebar, and the colours follow the kamllistos logo: ink, orange and bone, in light and dark mode.
 - **New logo.** Albert's mark is an A, used in the sidebar, the browser tab icon and the session-ended screen.
