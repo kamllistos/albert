@@ -20,7 +20,8 @@ const brewHint = "Albert was installed with Homebrew. Finish with: brew uninstal
 // links to): deleting it behind brew's back would leave brew confused.
 func isHomebrewPath(path string) bool {
 	p := filepath.ToSlash(path)
-	return strings.Contains(p, "/Cellar/") || strings.Contains(p, "/Caskroom/") || strings.HasPrefix(p, "/opt/homebrew/")
+	return strings.Contains(p, "/Cellar/") || strings.Contains(p, "/Caskroom/") || strings.HasPrefix(p, "/opt/homebrew/") ||
+		strings.HasPrefix(p, "/home/linuxbrew/.linuxbrew/")
 }
 
 // program is the albert program uninstall will delete.

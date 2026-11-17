@@ -2,7 +2,7 @@
 
 [![test](https://github.com/kamllistos/albert/actions/workflows/test.yml/badge.svg)](https://github.com/kamllistos/albert/actions/workflows/test.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-Albert shows every tool installed on your Mac by Homebrew, pip, npm and other package managers in one place, tells you which ones have updates, and lets you update or install them with a click. It runs on your Mac; the only network traffic is your package managers and version lookups on public registries.
+Albert shows every tool installed on your Mac or Linux machine by Homebrew, pip, npm and other package managers in one place, tells you which ones have updates, and lets you update or install them with a click. It runs on your computer; the only network traffic is your package managers and version lookups on public registries.
 
 ![Albert: run albert up, install a tool in Terminal and watch it appear live with a New badge](docs/demo.gif)
 
@@ -20,7 +20,7 @@ brew install kamllistos/tap/albert
 curl -fsSL https://raw.githubusercontent.com/kamllistos/albert/main/install.sh | sh
 ```
 
-Albert works on Apple silicon and Intel Macs running macOS 12 (Monterey) or later. The script installs into `~/.local/bin` and tells you if that folder needs adding to your PATH.
+Albert works on Apple silicon and Intel Macs running macOS 12 (Monterey) or later, and on 64-bit Linux (x86-64 and ARM). On Linux, Homebrew installs work through Linuxbrew, and Albert opens in your browser without Docker. The script installs into `~/.local/bin` and tells you if that folder needs adding to your PATH.
 
 ## Use it
 

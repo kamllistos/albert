@@ -15,6 +15,7 @@ import (
 	"os/exec"
 	"os/signal"
 	"path/filepath"
+	"runtime"
 	"strconv"
 	"strings"
 	"syscall"
@@ -59,14 +60,17 @@ type dockerControl interface {
 // docker mode, the GUI container). Every outside effect is a field so tests
 // can fake it.
 type lifecycle struct {
-	dir     string
-	version string
-	ctx     context.Context // nil means context.Background()
-	docker  dockerControl
-	spawn   func(args []string, logPath string) (pid int, err error) // start a detached "albert <args>"
-	kill    func(pid int) error                                      // SIGTERM, wait, SIGKILL
-	procCmd func(pid int) string                                     // pid's command line, "" if gone
-	health  func(port int, token string) bool                        // agent answers /api/health
+	// noDocker opens Albert without Docker. On Linux the window container
+	// can't reach the agent, which listens only on the host's 127.0.0.1.
+	noDocker bool
+	dir      string
+	version  string
+	ctx      context.Context // nil means context.Background()
+	docker   dockerControl
+	spawn    func(args []string, logPath string) (pid int, err error) // start a detached "albert <args>"
+	kill     func(pid int) error                                      // SIGTERM, wait, SIGKILL
+	procCmd  func(pid int) string                                     // pid's command line, "" if gone
+	health   func(port int, token string) bool                        // agent answers /api/health
 	// uiHealth reports whether the agent answers /api/health through the
 	// Docker window (Caddy) on the UI port.
 	uiHealth func(port int, token string) bool
@@ -127,7 +131,7 @@ func (l *lifecycle) up(native, noOpen bool) int {
 	}
 
 	mode := "docker"
-	if native {
+	if native || l.noDocker {
 		mode = "native"
 	} else if l.docker.Ready(ctx) != nil {
 		mode = "native"
@@ -444,7 +448,8 @@ func (a *app) lifecycle() *lifecycle {
 		uiHealth:   httpUIHealth,
 		activeJobs: httpActiveJobs,
 		mintCode:   httpLoginCode,
-		openURL:    func(u string) error { return exec.Command("open", u).Run() },
+		openURL:    func(u string) error { return exec.Command(openCommand(runtime.GOOS), u).Run() },
+		noDocker:   runtime.GOOS == "linux",
 		out:        a.stdout,
 		in:         a.stdin,
 		tty:        a.isTTY,
@@ -713,4 +718,12 @@ func httpActiveJobs(port int, token string) (int, error) {
 		}
 	}
 	return n, nil
+}
+
+// openCommand is the program that opens a URL in the default browser.
+func openCommand(goos string) string {
+	if goos == "darwin" {
+		return "open"
+	}
+	return "xdg-open"
 }
