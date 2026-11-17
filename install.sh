@@ -12,24 +12,35 @@ die() {
 	exit 1
 }
 
-[ "$(uname -s)" = "Darwin" ] || die "Albert only runs on macOS."
-
-macos="$(sw_vers -productVersion)"
-[ "${macos%%.*}" -ge 12 ] || die "Albert needs macOS 12 (Monterey) or later; this Mac has macOS $macos."
+case "$(uname -s)" in
+Darwin)
+	os=darwin
+	macos="$(sw_vers -productVersion)"
+	[ "${macos%%.*}" -ge 12 ] || die "Albert needs macOS 12 (Monterey) or later; this Mac has macOS $macos."
+	;;
+Linux) os=linux ;;
+*) die "Albert runs on macOS and Linux only." ;;
+esac
 
 case "$(uname -m)" in
-arm64) arch=arm64 ;;
-x86_64) arch=amd64 ;;
-*) die "this Mac's processor ($(uname -m)) isn't supported. Albert supports Apple silicon and Intel Macs." ;;
+arm64 | aarch64) arch=arm64 ;;
+x86_64 | amd64) arch=amd64 ;;
+*) die "this processor ($(uname -m)) isn't supported. Albert supports 64-bit ARM and Intel/AMD." ;;
 esac
 
 command -v curl >/dev/null 2>&1 || die "curl is needed but wasn't found."
-command -v shasum >/dev/null 2>&1 || die "shasum is needed but wasn't found."
+if command -v shasum >/dev/null 2>&1; then
+	sha256() { shasum -a 256 -c check.txt; }
+elif command -v sha256sum >/dev/null 2>&1; then
+	sha256() { sha256sum -c check.txt; }
+else
+	die "shasum or sha256sum is needed but neither was found."
+fi
 
 tmp="$(mktemp -d)"
 trap 'rm -rf "$tmp"' EXIT INT TERM HUP
 
-archive="albert_darwin_${arch}.tar.gz"
+archive="albert_${os}_${arch}.tar.gz"
 
 printf 'Looking up the latest Albert release...\n'
 status="$(curl -sSL -o "$tmp/release.json" -w '%{http_code}' "$API")" ||
@@ -59,7 +70,7 @@ curl -fsSL -o "$tmp/checksums.txt" "$sums_url" || die "couldn't download checksu
 printf 'Checking the download...\n'
 grep "  $archive\$" "$tmp/checksums.txt" >"$tmp/check.txt" ||
 	die "checksums.txt has no entry for $archive."
-(cd "$tmp" && shasum -a 256 -c check.txt >/dev/null 2>&1) ||
+(cd "$tmp" && sha256 >/dev/null 2>&1) ||
 	die "the download doesn't match its checksum, so it was not installed."
 
 tar -xzf "$tmp/$archive" -C "$tmp" albert || die "couldn't unpack $archive."
@@ -74,8 +85,10 @@ case ":$PATH:" in
 *)
 	printf '\n%s is not on your PATH yet. Add it by running:\n' "$BIN_DIR"
 	# shellcheck disable=SC2016
-	printf '  echo '\''export PATH="$HOME/.local/bin:$PATH"'\'' >> ~/.zshrc\n'
-	printf 'then open a new Terminal window.\n\n'
+	rc="$HOME/.zshrc"
+	case "${SHELL:-}" in */bash) rc="$HOME/.bashrc" ;; esac
+	printf '  echo '\''export PATH="$HOME/.local/bin:$PATH"'\'' >> %s\n' "$rc"
+	printf 'then open a new terminal window.\n\n'
 	;;
 esac
 

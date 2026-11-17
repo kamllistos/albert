@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"runtime"
 	"slices"
 	"strings"
 
@@ -46,10 +47,15 @@ func (p *gemProvider) userDir() string {
 	return ""
 }
 
-// systemGemDir reports whether dir belongs to macOS's own Ruby, which Albert
-// must not touch.
-func systemGemDir(dir string) bool {
-	return strings.HasPrefix(dir, "/System/") || strings.HasPrefix(dir, "/Library/")
+// systemGemDir reports whether dir belongs to the operating system's own Ruby
+// (macOS's, or a Linux distribution package), which Albert must not touch.
+func systemGemDir(dir string) bool { return systemGemDirOn(runtime.GOOS, dir) }
+
+func systemGemDirOn(goos, dir string) bool {
+	if strings.HasPrefix(dir, "/System/") || strings.HasPrefix(dir, "/Library/") {
+		return true
+	}
+	return goos == "linux" && ((strings.HasPrefix(dir, "/usr/") && !strings.HasPrefix(dir, "/usr/local/")) || strings.HasPrefix(dir, "/var/lib/"))
 }
 
 // writableGemDir reports whether gems in dir can be changed without sudo. An

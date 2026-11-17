@@ -11,6 +11,7 @@ builds:
       - CGO_ENABLED=0
     goos:
       - darwin
+      - linux
     goarch:
       - arm64
       - amd64
@@ -19,7 +20,7 @@ builds:
     ldflags:
       - -s -w -X main.version={{.Version}}
 
-# Archive names are albert_darwin_arm64.tar.gz and albert_darwin_amd64.tar.gz.
+# Archive names are albert_<darwin|linux>_<arm64|amd64>.tar.gz.
 # install.sh downloads exactly these names, so change both together.
 archives:
   - id: albert
@@ -44,7 +45,7 @@ homebrew_casks:
     binaries:
       - albert
     homepage: "https://github.com/kamllistos/albert"
-    description: "See, update and install every dev tool on your Mac in one place"
+    description: "See, update and install every dev tool on your Mac or Linux machine in one place"
     repository:
       owner: kamllistos
       name: homebrew-tap
