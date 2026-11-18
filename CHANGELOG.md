@@ -2,7 +2,7 @@
 
 What changed in Albert, newest first.
 
-## Unreleased (2026-11-17)
+## 0.1.10 (2026-11-17)
 
 - On Linux, install Albert with the install script or `go install github.com/kamllistos/albert/cmd/albert@latest`. Homebrew is for Macs only: the Homebrew cask no longer offers Linux downloads.
 - `albert version` shows the real version for builds made with `go install`.
