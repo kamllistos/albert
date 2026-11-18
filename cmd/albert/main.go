@@ -10,6 +10,7 @@ import (
 	"io"
 	"os"
 	"os/signal"
+	"runtime/debug"
 	"strings"
 	"syscall"
 
@@ -66,7 +67,7 @@ var commands = map[string]command{
 	"version":   cmdVersion,
 }
 
-const helpText = `Albert shows the tools installed on this Mac and keeps them up to date.
+const helpText = `Albert shows the tools installed on this computer and keeps them up to date.
 
 Usage: albert <command> [options]
 
@@ -193,6 +194,11 @@ func configureChildEnv() {
 }
 
 func main() {
+	// `go install ...@vX.Y.Z` builds have no ldflags; take the version from
+	// the module instead so `albert version` and the update notice work.
+	if bi, ok := debug.ReadBuildInfo(); ok && version == "dev" && strings.HasPrefix(bi.Main.Version, "v") {
+		version = bi.Main.Version
+	}
 	configureChildEnv()
 	ctx, stop := signal.NotifyContext(context.Background(), cliSignals...)
 	a := &app{

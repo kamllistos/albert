@@ -8,19 +8,25 @@ Albert shows every tool installed on your Mac or Linux machine by Homebrew, pip,
 
 ## Install
 
-**With Homebrew** (recommended):
+**Mac, with Homebrew** (recommended):
 
 ```sh
 brew install kamllistos/tap/albert
 ```
 
-**Or with the install script** — paste this into Terminal:
+**Mac or Linux, with the install script** — paste this into a terminal:
 
 ```sh
 curl -fsSL https://raw.githubusercontent.com/kamllistos/albert/main/install.sh | sh
 ```
 
-Albert works on Apple silicon and Intel Macs running macOS 12 (Monterey) or later, and on 64-bit Linux (x86-64 and ARM). On Linux, Homebrew installs work through Linuxbrew, and Albert opens in your browser without Docker. The script installs into `~/.local/bin` and tells you if that folder needs adding to your PATH.
+**Linux, with Go** (Go 1.26 or later):
+
+```sh
+go install github.com/kamllistos/albert/cmd/albert@latest
+```
+
+Albert works on Apple silicon and Intel Macs running macOS 12 (Monterey) or later, and on 64-bit Linux (x86-64 and ARM). On Linux, Albert opens in your browser without Docker. The script installs into `~/.local/bin` and tells you if that folder needs adding to your PATH; `go install` puts Albert in Go's bin folder (`go env GOPATH`/bin).
 
 ## Use it
 

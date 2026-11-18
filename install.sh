@@ -86,7 +86,8 @@ case ":$PATH:" in
 	printf '\n%s is not on your PATH yet. Add it by running:\n' "$BIN_DIR"
 	# shellcheck disable=SC2016
 	rc="$HOME/.zshrc"
-	case "${SHELL:-}" in */bash) rc="$HOME/.bashrc" ;; esac
+	[ "$os" = linux ] && rc="$HOME/.bashrc"
+	case "${SHELL:-}" in */bash) rc="$HOME/.bashrc" ;; */zsh) rc="$HOME/.zshrc" ;; esac
 	printf '  echo '\''export PATH="$HOME/.local/bin:$PATH"'\'' >> %s\n' "$rc"
 	printf 'then open a new terminal window.\n\n'
 	;;
