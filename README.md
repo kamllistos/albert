@@ -45,7 +45,7 @@ Some updates need your Mac password (for example, tools installed system-wide). 
 
 ## Update Albert
 
-When a new version is out, `albert up` and the Albert window tell you. Update with `brew update && brew upgrade albert`, or run the install one-liner again if you used it. Then run `albert down` and `albert up`.
+When a new version is out, Albert tells you after any command and in the Albert window, with the update command for how you installed it (`brew update && brew upgrade albert`, the install one-liner, or `go install ...@latest`). It checks at most once a day; set `ALBERT_NO_UPDATE_CHECK=1` to turn it off. After updating, run `albert down` and `albert up`.
 
 
 ## Uninstall

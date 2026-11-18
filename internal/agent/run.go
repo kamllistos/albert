@@ -31,7 +31,8 @@ type RunOptions struct {
 	StateDir     string
 	Mode         string // "docker" or "native"
 	Version      string
-	UI           fs.FS // the web UI; required in native mode, ignored in docker mode
+	UpgradeHint  string // command that updates Albert
+	UI           fs.FS  // the web UI; required in native mode, ignored in docker mode
 }
 
 const (
@@ -93,6 +94,7 @@ func Run(ctx context.Context, o RunOptions) error {
 		UIOrigins:    uiOrigins(o.UIPort),
 		UI:           o.UI,
 		Version:      o.Version,
+		UpgradeHint:  o.UpgradeHint,
 		Latest:       func() string { v, _ := latest.Load().(string); return v },
 	}, inv, jm)
 	hs := &http.Server{

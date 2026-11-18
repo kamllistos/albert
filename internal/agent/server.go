@@ -33,6 +33,8 @@ type Config struct {
 	Version string
 	// Latest returns a newer Albert release version, or "" (may be nil).
 	Latest func() string
+	// UpgradeHint is the command that updates Albert (may be empty).
+	UpgradeHint string
 }
 
 var (
@@ -135,7 +137,7 @@ func (s *server) health(w http.ResponseWriter, r *http.Request) {
 	if s.cfg.Latest != nil {
 		latest = s.cfg.Latest()
 	}
-	writeJSON(w, http.StatusOK, map[string]any{"ok": true, "version": s.cfg.Version, "latest": latest})
+	writeJSON(w, http.StatusOK, map[string]any{"ok": true, "version": s.cfg.Version, "latest": latest, "hint": s.cfg.UpgradeHint})
 }
 
 func (s *server) tools(w http.ResponseWriter, r *http.Request) {

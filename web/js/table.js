@@ -4,6 +4,7 @@
 const LABELS = {
   brew: 'Homebrew', cask: 'Homebrew apps', uv: 'uv', pipx: 'pipx', pip: 'pip',
   npm: 'npm', pnpm: 'pnpm', bun: 'Bun', mas: 'App Store', cargo: 'Cargo', go: 'Go', gem: 'RubyGems', github: 'GitHub',
+  apt: 'apt', snap: 'Snap', localbin: '~/.local/bin',
 };
 const COMMANDS = { cask: 'brew' };
 
