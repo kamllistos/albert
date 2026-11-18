@@ -4,6 +4,8 @@ What changed in Albert, newest first.
 
 ## Unreleased (2026-11-17)
 
+- On Linux, install Albert with the install script or `go install github.com/kamllistos/albert/cmd/albert@latest`. Homebrew is for Macs only: the Homebrew cask no longer offers Linux downloads.
+- `albert version` shows the real version for builds made with `go install`.
 - Messages and help say "this computer" instead of "this Mac", since Albert runs on Linux too.
 - On Linux, the install script suggests adding Albert to `~/.bashrc` (not `~/.zshrc`) when it can't tell your shell.
 

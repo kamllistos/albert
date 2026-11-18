@@ -3,27 +3,41 @@ version: 2
 
 project_name: albert
 
+# Separate darwin and linux builds so the Homebrew cask can take only the Mac
+# archives. Linux installs with install.sh or `go install`, not Homebrew.
 builds:
-  - id: albert
-    main: ./cmd/albert
-    binary: albert
-    env:
-      - CGO_ENABLED=0
+  - id: albert-darwin
     goos:
       - darwin
+    <<: &build
+      main: ./cmd/albert
+      binary: albert
+      env:
+        - CGO_ENABLED=0
+      goarch:
+        - arm64
+        - amd64
+      flags:
+        - -trimpath
+      ldflags:
+        - -s -w -X main.version={{.Version}}
+  - id: albert-linux
+    goos:
       - linux
-    goarch:
-      - arm64
-      - amd64
-    flags:
-      - -trimpath
-    ldflags:
-      - -s -w -X main.version={{.Version}}
+    <<: *build
 
 # Archive names are albert_<darwin|linux>_<arm64|amd64>.tar.gz.
 # install.sh downloads exactly these names, so change both together.
 archives:
-  - id: albert
+  - id: albert-darwin
+    ids:
+      - albert-darwin
+    formats:
+      - tar.gz
+    name_template: "albert_{{ .Os }}_{{ .Arch }}"
+  - id: albert-linux
+    ids:
+      - albert-linux
     formats:
       - tar.gz
     name_template: "albert_{{ .Os }}_{{ .Arch }}"
@@ -34,18 +48,18 @@ checksum:
 changelog:
   disable: true
 
-# Homebrew: `brew install kamllistos/tap/albert`. Publishes the cask to the
+# Homebrew (Mac only): `brew install kamllistos/tap/albert`. Publishes the cask to the
 # kamllistos/homebrew-tap repo. Needs the HOMEBREW_TAP_GITHUB_TOKEN secret (a
 # token that can push to that repo); without it the release still succeeds and
 # just skips the tap update.
 homebrew_casks:
   - name: albert
     ids:
-      - albert
+      - albert-darwin
     binaries:
       - albert
     homepage: "https://github.com/kamllistos/albert"
-    description: "See, update and install every dev tool on your Mac or Linux machine in one place"
+    description: "See, update and install every dev tool on your Mac in one place"
     repository:
       owner: kamllistos
       name: homebrew-tap

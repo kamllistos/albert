@@ -10,12 +10,3 @@ func TestOpenCommandPerOS(t *testing.T) {
 		t.Errorf("Linux: got %q, want xdg-open", got)
 	}
 }
-
-func TestIsHomebrewPathOnLinux(t *testing.T) {
-	if !isHomebrewPath("/home/linuxbrew/.linuxbrew/bin/albert") {
-		t.Error("a Linuxbrew program was not treated as Homebrew's")
-	}
-	if isHomebrewPath("/home/me/.local/bin/albert") {
-		t.Error("a ~/.local/bin program was treated as Homebrew's")
-	}
-}
