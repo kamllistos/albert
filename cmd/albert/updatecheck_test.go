@@ -41,7 +41,7 @@ func TestUpdateCheck(t *testing.T) {
 			dir := t.TempDir()
 			path := filepath.Join(dir, updateCheckFile)
 			if tt.cache != "" {
-				c := strings.NewReplacer("FRESH", itoa(fresh), "STALE", itoa(stale)).Replace(tt.cache)
+				c := strings.NewReplacer("FRESH", strconv.FormatInt(fresh, 10), "STALE", strconv.FormatInt(stale, 10)).Replace(tt.cache)
 				if err := os.WriteFile(path, []byte(c), 0o600); err != nil {
 					t.Fatal(err)
 				}
@@ -92,5 +92,3 @@ func TestUpgradeHintGoInstall(t *testing.T) {
 		t.Errorf("go hint = %q", h)
 	}
 }
-
-func itoa(n int64) string { return strconv.FormatInt(n, 10) }
