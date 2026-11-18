@@ -7,6 +7,8 @@ What changed in Albert, newest first.
 - On Linux, install Albert with the install script or `go install github.com/kamllistos/albert/cmd/albert@latest`. Homebrew is for Macs only: the Homebrew cask no longer offers Linux downloads.
 - `albert version` shows the real version for builds made with `go install`.
 - Messages and help say "this computer" instead of "this Mac", since Albert runs on Linux too.
+- **More sources on Linux.** Albert now lists packages you installed with apt (only ones you chose, not their dependencies) and Snap, and can update, install and remove them. Updating asks for your password, so run `albert update` in Terminal for those.
+- **Programs in `~/.local/bin`.** Albert lists standalone programs there on Mac and Linux and finds their version by running `--version` (or `version`) once. It remembers the answer until the file changes. Albert can't update these, since they don't come from a package manager.
 - On Linux, the install script suggests adding Albert to `~/.bashrc` (not `~/.zshrc`) when it can't tell your shell.
 
 ## 0.1.9 (2026-11-16)
