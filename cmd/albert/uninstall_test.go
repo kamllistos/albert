@@ -15,7 +15,7 @@ import (
 )
 
 const (
-	uninstallPromptFmt = "This removes Albert from this Mac: it stops Albert, deletes Albert's files in its settings folder (%s), removes its window image from Docker, and deletes the albert program (%s). Continue? [y/N]"
+	uninstallPromptFmt = "This removes Albert from this computer: it stops Albert, deletes Albert's files in its settings folder (%s), removes its window image from Docker, and deletes the albert program (%s). Continue? [y/N]"
 	wantBrewHint       = "Albert was installed with Homebrew. Finish with: brew uninstall albert"
 )
 
@@ -70,7 +70,7 @@ func TestUninstallTTYDeclines(t *testing.T) {
 		if code := h.l.uninstall(false); code != exitFail {
 			t.Fatalf("answer %q: uninstall = %d, want %d (like declining down); out:\n%s", answer, code, exitFail, h.out)
 		}
-		want := "This removes Albert from this Mac: it stops Albert, deletes Albert's files in its settings folder (" + h.l.dir +
+		want := "This removes Albert from this computer: it stops Albert, deletes Albert's files in its settings folder (" + h.l.dir +
 			"), removes its window image from Docker, and deletes the albert program (" + h.exe +
 			"). Continue? [y/N] Nothing was removed.\n"
 		if h.out.String() != want {
@@ -176,7 +176,7 @@ func TestUninstallHomebrewKeepsTheProgram(t *testing.T) {
 	if code := h.l.uninstall(false); code != exitOK {
 		t.Fatalf("uninstall = %d; out:\n%s", code, h.out)
 	}
-	want := "This removes Albert from this Mac: it stops Albert, deletes Albert's files in its settings folder (" + h.l.dir +
+	want := "This removes Albert from this computer: it stops Albert, deletes Albert's files in its settings folder (" + h.l.dir +
 		"), and removes its window image from Docker. Continue? [y/N] Removed the settings folder (" + h.l.dir + ").\n" +
 		"Albert has been removed.\n" + wantBrewHint + "\n"
 	if h.out.String() != want {

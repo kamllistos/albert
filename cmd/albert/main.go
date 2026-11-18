@@ -66,7 +66,7 @@ var commands = map[string]command{
 	"version":   cmdVersion,
 }
 
-const helpText = `Albert shows the tools installed on this Mac and keeps them up to date.
+const helpText = `Albert shows the tools installed on this computer and keeps them up to date.
 
 Usage: albert <command> [options]
 

@@ -199,7 +199,7 @@ func (l *lifecycle) removeSettings(dir string) (settingsResult, error) {
 	return settingsRemoved, nil
 }
 
-// uninstall removes Albert from this Mac: it stops Albert, removes its
+// uninstall removes Albert from this computer: it stops Albert, removes its
 // Docker image, deletes its own files from its settings folder (and the
 // folder, if nothing else is in it) and deletes the albert program
 // (unless Homebrew owns it). If the settings folder is one Albert must not
@@ -214,7 +214,7 @@ func (l *lifecycle) uninstall(yes bool) int {
 			fmt.Fprintln(l.out, `Run "albert uninstall --yes" to confirm.`)
 			return exitUsage
 		}
-		fmt.Fprintf(l.out, "This removes Albert from this Mac: it stops Albert, deletes Albert's files in its settings folder (%s), ", l.dir)
+		fmt.Fprintf(l.out, "This removes Albert from this computer: it stops Albert, deletes Albert's files in its settings folder (%s), ", l.dir)
 		if prog.path != "" && !prog.brew {
 			fmt.Fprintf(l.out, "removes its window image from Docker, and deletes the albert program (%s). Continue? [y/N] ", prog.path)
 		} else {

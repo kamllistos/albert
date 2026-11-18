@@ -302,7 +302,7 @@ func cmdInstall(a *app, args []string) int {
 	}
 	p, _ := a.find(src)
 	if !p.Available() {
-		return a.failf("%s isn't installed on this Mac.", src)
+		return a.failf("%s isn't installed on this computer.", src)
 	}
 	fmt.Fprintf(a.stdout, "Installing %s with %s…\n", name, src)
 	if err := p.Install(a.context(), arg, a.stdout); err != nil {

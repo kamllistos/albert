@@ -2,8 +2,14 @@
 
 What changed in Albert, newest first.
 
-## Unreleased (2026-11-10)
+## Unreleased (2026-11-17)
 
+- Messages and help say "this computer" instead of "this Mac", since Albert runs on Linux too.
+- On Linux, the install script suggests adding Albert to `~/.bashrc` (not `~/.zshrc`) when it can't tell your shell.
+
+## 0.1.9 (2026-11-16)
+
+- **Linux.** Albert runs on 64-bit Linux (x86-64 and ARM). Install it with the install script. On Linux Albert opens in your browser without Docker.
 - Albert needs macOS 12 (Monterey) or later. The README now says so, and the install script stops with a clear message on older Macs instead of installing a program that won't open.
 
 ## 0.1.8 (2026-11-10)
