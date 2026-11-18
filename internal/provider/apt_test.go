@@ -12,9 +12,9 @@ import (
 
 func aptFake() *runner.Fake {
 	return &runner.Fake{Responses: map[string]runner.Result{
-		"apt-mark showmanual": {Stdout: []byte("curl\nvim\nlibfoo:i386\n")},
-		"dpkg-query -W -f=${Package}\t${Version}\n curl vim libfoo:i386": {
-			Stdout: []byte("curl\t8.5.0-2\nvim\t2:9.1\nlibfoo\t1.0\n")},
+		"apt-mark showmanual": {Stdout: []byte("curl\nvim\nlibfoo:i386\nbash\npython3-tz\nubuntu-server\n")},
+		"dpkg-query -W -f=${Package}\t${Version}\t${Priority}\t${Section}\n curl vim libfoo:i386 bash python3-tz ubuntu-server": {
+			Stdout: []byte("curl\t8.5.0-2\toptional\tweb\nvim\t2:9.1\toptional\teditors\nlibfoo\t1.0\toptional\tuniverse/libs\nbash\t5.2\trequired\tshells\npython3-tz\t2024.1\toptional\tpython\nubuntu-server\t1.539\toptional\tmetapackages\n")},
 		"apt list --upgradable": {
 			Stdout: []byte("Listing...\ncurl/noble-updates 8.5.0-2ubuntu10.6 amd64 [upgradable from: 8.5.0-2ubuntu10.5]\nopenssl/noble-updates 3.0.13 amd64 [upgradable from: 3.0.12]\n"),
 			Stderr: []byte("WARNING: apt does not have a stable CLI interface.\n")},
@@ -29,7 +29,10 @@ func TestAptList(t *testing.T) {
 	want := []Tool{
 		{Name: "curl", Source: "apt", Version: "8.5.0-2"},
 		{Name: "vim", Source: "apt", Version: "2:9.1"},
-		{Name: "libfoo", Source: "apt", Version: "1.0"},
+		{Name: "libfoo", Source: "apt", Version: "1.0", Dependency: true},
+		{Name: "bash", Source: "apt", Version: "5.2", Dependency: true},
+		{Name: "python3-tz", Source: "apt", Version: "2024.1", Dependency: true},
+		{Name: "ubuntu-server", Source: "apt", Version: "1.539", Dependency: true},
 	}
 	if !reflect.DeepEqual(tools, want) {
 		t.Errorf("List = %+v, want %+v", tools, want)
