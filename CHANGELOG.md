@@ -2,6 +2,10 @@
 
 What changed in Albert, newest first.
 
+## 0.1.11 (2026-11-17)
+
+- The apt list shows the packages you installed, not Ubuntu's base system and libraries (which Ubuntu marks as manually installed). Run `albert list --deps` or tick "Show dependencies" to see them all.
+
 ## 0.1.10 (2026-11-17)
 
 - Albert now tells you when a newer version is out after any command (checked at most once a day), with the right update command for how you installed it (Homebrew, install script or `go install`).

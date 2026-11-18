@@ -44,25 +44,44 @@ func (p *aptProvider) List(ctx context.Context) ([]Tool, error) {
 	}
 	// dpkg-query exits non-zero if any name is unknown but still prints the
 	// rest, so only the output matters here.
-	res, err := p.r.Run(ctx, "dpkg-query", append([]string{"-W", "-f=${Package}\t${Version}\n"}, names...)...)
+	res, err := p.r.Run(ctx, "dpkg-query", append([]string{"-W", "-f=${Package}\t${Version}\t${Priority}\t${Section}\n"}, names...)...)
 	if err != nil {
 		return nil, fmt.Errorf("dpkg-query: %w", err)
 	}
 	if res.ExitCode != 0 && len(res.Stdout) == 0 {
 		return nil, cmdErr("dpkg-query", res)
 	}
-	versions := map[string]string{}
+	type pkg struct {
+		version string
+		dep     bool
+	}
+	pkgs := map[string]pkg{}
 	for _, l := range strings.Split(string(res.Stdout), "\n") {
-		if n, v, ok := strings.Cut(strings.TrimSpace(l), "\t"); ok {
-			versions[n] = v
+		if f := strings.Split(strings.TrimSpace(l), "\t"); len(f) == 4 {
+			pkgs[f[0]] = pkg{f[1], aptBaseOrLib(f[2], f[3])}
 		}
 	}
 	tools := make([]Tool, 0, len(names))
 	for _, n := range names {
 		n, _, _ = strings.Cut(n, ":")
-		tools = append(tools, Tool{Name: n, Source: p.Name(), Version: versions[n]})
+		tools = append(tools, Tool{Name: n, Source: p.Name(), Version: pkgs[n].version, Dependency: pkgs[n].dep})
 	}
 	return tools, nil
+}
+
+// aptBaseOrLib reports packages to treat as dependencies: distro images mark
+// the whole base system (and libraries pulled in by installers) as manual.
+func aptBaseOrLib(priority, section string) bool {
+	switch priority {
+	case "required", "important", "standard":
+		return true
+	}
+	section = section[strings.LastIndex(section, "/")+1:] // "universe/libs" -> "libs"
+	switch section {
+	case "libs", "oldlibs", "python", "metapackages", "localization":
+		return true
+	}
+	return false
 }
 
 // Outdated reflects the last `apt update`; it is not run here because it
