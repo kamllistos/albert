@@ -103,7 +103,10 @@ func run(a *app, args []string) int {
 		fmt.Fprintf(a.stderr, "Unknown command %q. Run \"albert help\" to see what Albert can do.\n", name)
 		return exitUsage
 	}
-	return cmd(a, args[1:])
+	u := a.startUpdateCheck(name)
+	code := cmd(a, args[1:])
+	u.notice(a.stderr, true)
+	return code
 }
 
 func cmdVersion(a *app, _ []string) int {
@@ -198,6 +201,7 @@ func main() {
 	// the module instead so `albert version` and the update notice work.
 	if bi, ok := debug.ReadBuildInfo(); ok && version == "dev" && strings.HasPrefix(bi.Main.Version, "v") {
 		version = bi.Main.Version
+		goInstalled = true
 	}
 	configureChildEnv()
 	ctx, stop := signal.NotifyContext(context.Background(), cliSignals...)

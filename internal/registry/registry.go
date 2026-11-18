@@ -253,6 +253,11 @@ func (c *Client) NewerAlbert(ctx context.Context, current string) (string, error
 	return latest, nil
 }
 
+// NewerVersion reports whether release a is newer than b ("v" prefixes allowed).
+func NewerVersion(a, b string) bool {
+	return newerVersion(strings.TrimPrefix(a, "v"), strings.TrimPrefix(b, "v"))
+}
+
 // newerVersion reports whether dotted version a is greater than b. A
 // pre-release suffix ("1.2.0-rc1") is ignored.
 func newerVersion(a, b string) bool {
